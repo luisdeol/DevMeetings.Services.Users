@@ -18,8 +18,10 @@ namespace DevMeetings.Services.Users.Infrastructure.MessageBus
             _connection = connectionFactory.CreateConnection("users-service-producer"); 
         }
         
-        public void Publish(object message, string queue, string exchange)
+        public void Publish(object message, string routingKey, string exchange)
         {
+            Console.WriteLine($"routing Key: {routingKey}, Exchange: {exchange}");
+            
             var channel = _connection.CreateModel();
 
             var settings = new JsonSerializerSettings {
@@ -34,11 +36,11 @@ namespace DevMeetings.Services.Users.Infrastructure.MessageBus
             
             channel.ExchangeDeclare(exchange, "topic", true);
 
-            channel.QueueDeclare(queue, false, false, false, null);
-            channel.QueueBind(queue, exchange, queue, null);
-            Console.WriteLine($"{exchange}->{queue}");
+            // channel.QueueDeclare(queue, false, false, false, null);
+            // channel.QueueBind(queue, exchange, queue, null);
+            Console.WriteLine($"{exchange}->{routingKey}");
 
-            channel.BasicPublish(exchange, queue, null, body);
+            channel.BasicPublish(exchange, routingKey, null, body);
         }
     }
 }

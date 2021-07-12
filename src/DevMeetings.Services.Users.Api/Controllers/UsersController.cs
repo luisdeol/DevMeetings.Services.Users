@@ -20,5 +20,12 @@ namespace DevMeetings.Services.Users.Api.Controllers
 
             return Created($"api/users/{id}", userInputModel);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UpdateUserInputModel inputModel) {
+            await _userService.Update(inputModel);
+            
+            return NoContent();
+        }
     }
 }

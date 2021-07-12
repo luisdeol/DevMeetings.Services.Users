@@ -4,5 +4,6 @@ namespace DevMeetings.Services.Users.Api.Application.InputModels
     {
         public string FullName { get; set; }
         public string Profession { get; set; }
+        public string Email { get; set; }
     }
 }

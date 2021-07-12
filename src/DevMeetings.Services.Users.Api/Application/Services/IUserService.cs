@@ -7,5 +7,6 @@ namespace DevMeetings.Services.Users.Api.Application.Services
     public interface IUserService
     {
          Task<Guid> Add(UserInputModel userInputModel);
+         Task Update(UpdateUserInputModel updateUserInputModel);
     }
 }

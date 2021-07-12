@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using DevMeetings.Services.Users.Core.Entities;
 using DevMeetings.Services.Users.Core.Repositories;
@@ -15,6 +16,16 @@ namespace DevMeetings.Services.Users.Infrastructure.Persistence.Repositories
         public async Task AddAsync(User user)
         {
             await _collection.InsertOneAsync(user);
+        }
+
+        public async Task<User> GetByIdAsync(Guid id)
+        {
+            return await _collection.Find(c => c.Id == id).SingleOrDefaultAsync();
+        }
+
+        public async Task UpdateAsync(User user)
+        {
+            await _collection.ReplaceOneAsync<User>(u => u.Id == user.Id, user);
         }
     }
 }
